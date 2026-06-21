@@ -40,7 +40,8 @@ uv sync
 ```
 
 ### 2. Configure environment
-Create .env file and put the followig:
+
+Create `.env` file and put the followig:
 
 ```bash
 GEMINI_API_KEY = #YOUR_GEMINI_API_KEY (get one at https://aistudio.google.com/apikey)
