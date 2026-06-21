@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — AI Debug Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-row">ai_debug<span>_assistant</span> /</div>
+
+      <div class="profile-card">
+        <div class="avatar">{{ user.username[0]|upper }}</div>
+        <div class="name">{{ user.username }}</div>
+        <div class="email">{{ user.email }}</div>
+        <div class="divider"></div>
+        <a class="logout" href="/logout">&larr; Log out</a>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-pill">
+          <div class="n">{{ stats.total }}</div>
+          <div class="l">Total</div>
+        </div>
+        <div class="stat-pill">
+          <div class="n" style="color: var(--success);">{{ stats.success }}</div>
+          <div class="l">Resolved</div>
+        </div>
+        <div class="stat-pill">
+          <div class="n" style="color: var(--danger);">{{ stats.failed }}</div>
+          <div class="l">Failed</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <span class="eyebrow">Dashboard</span>
+      <h1>Welcome back, {{ user.username }}</h1>
+      <p class="sub">Submit a programming issue and the diagnostic pipeline will classify it for you.</p>
+
+      <section class="panel">
+        <h2><span class="dot"></span> New diagnostic</h2>
+        <p class="desc">Describe the bug exactly as you're seeing it — error text, stack trace, or behavior.</p>
+
+        <form method="POST" action="/submit">
+          <div class="row">
+            <div class="field">
+              <label for="language">Language</label>
+              <select id="language" name="language" required>
+                <option value="Python">Python</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="TypeScript">TypeScript</option>
+                <option value="Java">Java</option>
+                <option value="C++">C++</option>
+                <option value="C#">C#</option>
+                <option value="Go">Go</option>
+                <option value="Rust">Rust</option>
+                <option value="SQL">SQL</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="issue_description">Issue description</label>
+              <textarea id="issue_description" name="issue_description" placeholder="e.g. Getting 'TypeError: cannot read property of undefined' when mapping over an array fetched from my API..." required></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-submit">Run diagnostic</button>
+        </form>
+      </section>
+
+      <section>
+        <div class="log-heading">
+          <h2>Session log</h2>
+          <span class="log-count">{{ stats.total }} entr{{ 'y' if stats.total == 1 else 'ies' }}</span>
+        </div>
+
+        {% if sessions %}
+        <div class="log-list">
+          {% for s in sessions %}
+          <div class="log-entry status-{{ s.ai_status|lower }}">
+            <div class="top-row">
+              <span class="lang">{{ s.language }} &middot; #{{ s.id }}</span>
+              <span class="status-badge status-{{ s.ai_status|lower }}">{{ s.ai_status }}</span>
+            </div>
+
+            <p class="issue">{{ s.issue_description }}</p>
+
+            {% if s.ai_status == "SUCCESS" %}
+              <div class="log-meta">
+                <span class="meta-tag">category: {{ s.ai_category }}</span>
+                <span class="meta-tag">difficulty: {{ s.ai_difficulty }}</span>
+              </div>
+              <p class="recommendation"><strong>Recommendation —</strong> {{ s.ai_recommendation }}</p>
+            {% elif s.ai_status == "FAILED" %}
+              <p class="error-text">error: {{ s.error_message }}</p>
+            {% else %}
+              <p class="recommendation">Awaiting diagnostic result&hellip;</p>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">no diagnostics logged yet — submit your first issue above</div>
+        {% endif %}
+      </section>
+    </main>
+  </div>
+</body>
+</html>

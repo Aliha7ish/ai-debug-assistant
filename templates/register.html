@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create account — AI Debug Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-side">
+      <div class="brand">ai_code<span>_assistant</span> /</div>
+      <div>
+        <div class="boot-log">
+          <div><span class="tag">[setup]</span> provisioning new user record</div>
+          <div><span class="tag">[crypto]</span> bcrypt hashing <span class="ok">enabled</span></div>
+          <div><span class="tag">[db]</span> unique constraints <span class="ok">enforced</span></div>
+          <div><span class="tag">[next]</span> first diagnostic awaits<span class="cursor"></span></div>
+        </div>
+        <p class="tagline" style="margin-top: 28px;">
+          Create an account to start logging the bugs you hit and get a
+          structured read on each one.
+        </p>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="auth-main">
+      <div class="auth-card">
+        <span class="eyebrow">New account</span>
+        <h1>Register</h1>
+        <p class="sub">It only takes a moment.</p>
+
+        {% if error %}
+        <div class="alert">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="/register">
+          <div class="field">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" autocomplete="username" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required />
+          </div>
+          <button type="submit" class="btn">Create account</button>
+        </form>
+
+        <div class="switch-link">
+          Already registered? <a href="/login">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
