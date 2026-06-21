@@ -36,6 +36,7 @@ Gemini API via `google-genai`.
 ```bash
 # 1. Install dependencies (pick one)
 uv sync                                 
+```
 
 # 2. Configure environment
 Create .env file and put the followig:
@@ -47,6 +48,7 @@ GEMINI_MODEL=gemini-3.5-flash
 ```
 
 # 3. Run the dev server
+```
 uv run uvicorn main:app --reload
 ```
 
