@@ -33,22 +33,24 @@ Gemini API via `google-genai`.
 
 ## Setup
 
+### 1. Install dependencies (pick one)
+
 ```bash
-# 1. Install dependencies (pick one)
 uv sync                                 
 ```
 
-# 2. Configure environment
+### 2. Configure environment
 Create .env file and put the followig:
 
-```
+```bash
 GEMINI_API_KEY = #YOUR_GEMINI_API_KEY (get one at https://aistudio.google.com/apikey)
 
 GEMINI_MODEL=gemini-3.5-flash
 ```
 
-# 3. Run the dev server
-```
+### 3. Run the dev server
+
+```bash
 uv run uvicorn main:app --reload
 ```
 
