@@ -31,33 +31,59 @@ Gemini API via `google-genai`.
 ├── pyproject.toml         # uv-compatible
 ```
 
-## Setup
+## Clone & Run Locally
 
-### 1. Install dependencies (pick one)
+### 1. Clone the repository
 
 ```bash
-uv sync                                 
+git clone https://github.com/Aliha7ish/ai-debug-assistant.git
+cd ai-debug-assistant
 ```
 
-### 2. Configure environment
+### 2. Install dependencies
 
-Create `.env` file and put the followig:
+Using **uv**:
+
+```
+uv sync
+```
+
+This will create the virtual environment and install all dependencies from `pyproject.toml`.
+
+### 3. Configure environment variables
+
+Create a `.env` file in the project root:
 
 ```bash
-GEMINI_API_KEY = #YOUR_GEMINI_API_KEY (get one at https://aistudio.google.com/apikey)
-
+GEMINI_API_KEY=your_gemini_api_key
 GEMINI_MODEL=gemini-3.5-flash
 ```
 
-### 3. Run the dev server
+Get your Gemini API key from:
+
+[https://aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+
+### 4. Start the application
+
+Run the FastAPI server:
 
 ```bash
 uv run uvicorn main:app --reload
 ```
 
-Then open **http://127.0.0.1:8000**.
+The application will be available at:
 
-`database.db` is created automatically on first boot — no migration step needed.
+```
+http://127.0.0.1:8000
+```
+
+### 5. First-time usage
+
+- Open the application in your browser.
+- Create a new account from `/register`.
+- Login using your credentials.
+- Submit a programming issue and receive an AI-powered diagnosis.
+
 
 ## Verification checklist
 
